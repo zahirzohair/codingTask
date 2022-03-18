@@ -57,6 +57,12 @@ class NoteController extends Controller
             'is_done' => 'required'
         ]);
 
+        if(!empty($request->get('due_date'))){
+            $request->validate([
+                'due_date' =>'date_format:Y-m-d'
+            ]);
+        }
+
         $note = Note::create([
             'title' => $request->get('title'),
             'content'  => $request->get('content'),
@@ -97,6 +103,17 @@ class NoteController extends Controller
     public function update(Request $request, $id)
     {
         $note = Note::find($id);
+
+        $request->validate([
+            'title' => 'required',
+            'is_done' => 'required'
+        ]);
+
+        if(!empty($request->get('due_date'))){
+            $request->validate([
+                'due_date' =>'date_format:Y-m-d'
+            ]);
+        }
     
         $note->update([
             'title' => $request->get('title'),
